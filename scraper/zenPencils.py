@@ -1,4 +1,4 @@
-import requests, urllib, re, os
+import requests, urllib, re, os, json, pyrebase
 from bs4 import BeautifulSoup as BS
 
 session = requests.session()
@@ -11,7 +11,7 @@ homepage = BS(page.text,"html.parser").find('form',{'class':'comic-list-dropdown
 # print(homepage)
 pages = homepage.find_all('option',{'class':'level-0'})
 print("\n  Finding Links \n ")
-
+data = {}
 for i in pages:
-    print(i.get_text())
-    print(i['value'])
+    data[i.get_text()] = i['value']
+print(data)
