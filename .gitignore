@@ -2,3 +2,4 @@
 *.DS_Store
 getupyoufool.json
 */__pycache__
+*samples*
