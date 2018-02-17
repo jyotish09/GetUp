@@ -1,7 +1,7 @@
 import requests, urllib, re, os, json, pyrebase
 from bs4 import BeautifulSoup as BS
 import txt
-print(txt.user)
+# print(txt.user)
 session = requests.session()
 pageURL = 'https://zenpencils.com/'
 page = session.post(pageURL)
@@ -11,8 +11,10 @@ page = session.post(pageURL)
 homepage = BS(page.text,"html.parser").find('form',{'class':'comic-list-dropdown-form'})
 # print(homepage)
 pages = homepage.find_all('option',{'class':'level-0'})
-print("\n  Finding Links \n ")
-data = {}
+print("\n  Finding Links .... \n ")
+
 for i in pages:
-    data[i.get_text()] = i['value']
-print(data)
+    print(json.dumps({'key':i.get_text(),'value':i['value']}))
+    print(" Writing Links into FDB ....  ")
+    txt.db.child("zenpencils").push({'key':i.get_text(),'value':i['value']}, txt.user['idToken'])
+# print(json.dumps(data))
