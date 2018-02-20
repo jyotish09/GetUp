@@ -32,4 +32,15 @@ for i in data["items"]:
     if 'videoId' in i["id"]:
         print("\n")
         print(i["snippet"]["title"])
-        print(i["id"]["videoId"])
+        paramsVid= dict(
+        id=i["id"]["videoId"],
+        part='contentDetails',
+        key=txt.youtubeAPIKey
+        )
+        print('paramsVid')
+        print(get_pretty_print(paramsVid))
+        urlVid = 'https://www.googleapis.com/youtube/v3/videos'
+        respVid = requests.get(url=urlVid, params=paramsVid)
+        dataVid = json.loads(respVid.text)
+        # print(get_pretty_print(dataVid))
+        print(get_pretty_print(dataVid["items"][0]["contentDetails"]["duration"]))
