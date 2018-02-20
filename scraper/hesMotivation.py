@@ -14,20 +14,22 @@ params = dict(
     maxResults=50,
     key=txt.youtubeAPIKey
 )
-print('params')
-print(params)
+# print('params')
+# print(params)
 resp = requests.get(url=url, params=params)
 data = json.loads(resp.text)
 # print("\n data \n")
 # print(get_pretty_print(data))
 if 'nextPageToken' in data:
-    print('\n data["nextPageToken"] \n')
+    print('\nnextPageToken : ')
     print(data["nextPageToken"])
 if 'prevPageToken' in data:
-    print('\n data["prevPageToken"] \n')
+    print('\nprevPageToken : ')
     print(data["prevPageToken"])
-print("\n Looping through items ... \n")
+print("\n Looping through items ...")
 
 for i in data["items"]:
-    print("\n")
-    print(get_pretty_print(i))
+    if 'videoId' in i["id"]:
+        print("\n")
+        print(i["snippet"]["title"])
+        print(i["id"]["videoId"])
