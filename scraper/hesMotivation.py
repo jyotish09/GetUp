@@ -1,25 +1,27 @@
 import pyrebase, json, requests
 import txt
 
-def get_pretty_print(json_object):
+def pretty_print_json(json_object):
     return json.dumps(json_object, sort_keys=True, indent=4, separators=(',', ': '))
 
-url = 'https://www.googleapis.com/youtube/v3/search'
+def youtube_list_videos():
+    url = 'https://www.googleapis.com/youtube/v3/search'
+    params = dict(
+        order='date',
+        pageToken='CMgBEAA',
+        part='snippet',
+        channelId='UC3gWv-0A3qEeFBJESlsJa0g',
+        maxResults=50,
+        key=txt.youtubeAPIKey
+    )
+    # print('params')
+    # print(params)
+    resp = requests.get(url=url, params=params)
+    return json.loads(resp.text)
 
-params = dict(
-    order='date',
-    pageToken='CMgBEAA',
-    part='snippet',
-    channelId='UC3gWv-0A3qEeFBJESlsJa0g',
-    maxResults=50,
-    key=txt.youtubeAPIKey
-)
-# print('params')
-# print(params)
-resp = requests.get(url=url, params=params)
-data = json.loads(resp.text)
+data = youtube_list_videos()
 # print("\n data \n")
-# print(get_pretty_print(data))
+# print(pretty_print_json(data))
 if 'nextPageToken' in data:
     print('\nnextPageToken : ')
     print(data["nextPageToken"])
@@ -38,9 +40,15 @@ for i in data["items"]:
         key=txt.youtubeAPIKey
         )
         print('paramsVid')
-        print(get_pretty_print(paramsVid))
+        print(pretty_print_json(paramsVid["id"]))
         urlVid = 'https://www.googleapis.com/youtube/v3/videos'
         respVid = requests.get(url=urlVid, params=paramsVid)
         dataVid = json.loads(respVid.text)
-        # print(get_pretty_print(dataVid))
-        print(get_pretty_print(dataVid["items"][0]["contentDetails"]["duration"]))
+        # print(pretty_print_json(dataVid))
+        print(pretty_print_json(dataVid["items"][0]["contentDetails"]["duration"]))
+        if  dataVid["items"][0]["contentDetails"]["duration"] <= "PT9M59S" :
+            print("<=PT9M59S")
+        if  "PT12M30S" > dataVid["items"][0]["contentDetails"]["duration"] > "PT10M00S" :
+            print("PT12M30S  -  PT10M00S")
+        else : # dataVid["items"][0]["contentDetails"]["duration"] > "PT12M30S":
+            print("Too Long")
