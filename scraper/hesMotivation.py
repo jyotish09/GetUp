@@ -29,32 +29,44 @@ def videoDetails(id):
     respVid = requests.get(url=urlVid, params=paramsVid)
     return json.loads(respVid.text)
 
-data = youtube_list_videos('CMgBEAA')
+data = youtube_list_videos('')
+nextPageTokenVal = ''
+# data = youtube_list_videos('CMgBEAA')
 # print("\n data \n")
 # print(pretty_print_json(data))
+print("First Page")
 if 'nextPageToken' in data:
     print('\nnextPageToken : ')
     print(data["nextPageToken"])
+    nextPageTokenVal = data["nextPageToken"]
 if 'prevPageToken' in data:
     print('\nprevPageToken : ')
     print(data["prevPageToken"])
-print("\n Looping through items ...")
 
-for i in data["items"]:
-    if 'videoId' in i["id"]:
-        print("\n")
-        print(i["snippet"]["title"])
-        print(pretty_print_json(i["id"]["videoId"]))
+# Looping through each page below
+# print("\n Looping through items ...")
+# for i in data["items"]:
+#     if 'videoId' in i["id"]:
+#         print("\n")
+#         print(i["snippet"]["title"])
+#         print(pretty_print_json(i["id"]["videoId"]))
+#
+#         dataVid = videoDetails(i["id"]["videoId"])
+#         # print(pretty_print_json(dataVid))
+#         print(pretty_print_json(dataVid["items"][0]["contentDetails"]["duration"]))
+#         dur = isodate.parse_duration(dataVid["items"][0]["contentDetails"]["duration"]).total_seconds()
+#         print(dur)
+#
+#         if  dur <= 599 :
+#             print("<= PT9M59S")
+#         if  750 > dur > 599 :
+#             print("PT12M30S - PT10M00S")
+#         if  750 <= dur :
+#             print("Too Long")
 
-        dataVid = videoDetails(i["id"]["videoId"])
-        # print(pretty_print_json(dataVid))
-        print(pretty_print_json(dataVid["items"][0]["contentDetails"]["duration"]))
-        dur=isodate.parse_duration(dataVid["items"][0]["contentDetails"]["duration"]).total_seconds()
-        print(dur)
-
-        if  dur <= 599 :
-            print("<=PT9M59S")
-        if  750 > dur > 599 :
-            print("PT12M30S  -  PT10M00S")
-        if  750 <= dur :
-            print("Too Long")
+print("Checking Remaining Pages \n")
+while 'nextPageToken' in data:
+    data = youtube_list_videos(data["nextPageToken"])
+    if 'nextPageToken' in data:
+        print('data["nextPageToken"]')
+        print(data["nextPageToken"])
