@@ -30,12 +30,11 @@ def videoDetails(id):
     return json.loads(respVid.text)
 
 def allVideoId(pageToken,data):
-    if not data :
-        print("Data : None")
-    else :
-        print("Data Exists")
+    resp = data if data else youtube_list_videos('')
 
     print("\n Calling allVideoId fn() : "+pageToken+"\n")
+
+    print(pretty_print_json(resp))
 
 
 data = youtube_list_videos('')
