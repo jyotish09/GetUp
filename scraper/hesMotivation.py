@@ -34,7 +34,25 @@ def allVideoId(pageToken,data):
 
     print("\n Calling allVideoId fn() : "+pageToken+"\n")
 
-    print(pretty_print_json(resp))
+    # print(pretty_print_json(resp))
+    for i in resp["items"]:
+        if 'videoId' in i["id"]:
+            print("\n")
+            # print(i["snippet"]["title"]) - Needs for Storage
+            print(i["id"]["videoId"])
+
+            dataVid = videoDetails(i["id"]["videoId"])
+            # print(pretty_print_json(dataVid))
+            print(dataVid["items"][0]["contentDetails"]["duration"])
+            dur = isodate.parse_duration(dataVid["items"][0]["contentDetails"]["duration"]).total_seconds()
+            print(dur)
+
+            if  dur <= 599 :
+                print("<= PT9M59S")
+            if  750 > dur > 599 :
+                print("PT10M00S - PT12M30S")
+            if  750 <= dur :
+                print("Too Long")
 
 
 data = youtube_list_videos('')
