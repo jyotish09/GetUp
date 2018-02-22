@@ -29,19 +29,26 @@ def videoDetails(id):
     respVid = requests.get(url=urlVid, params=paramsVid)
     return json.loads(respVid.text)
 
+def allVideoId(pageToken,data):
+    if not data :
+        print("Data : None")
+    else :
+        print("Data Exists")
+
+    print("\n Calling allVideoId fn() : "+pageToken+"\n")
+
+
 data = youtube_list_videos('')
-nextPageTokenVal = ''
 # data = youtube_list_videos('CMgBEAA')
 # print("\n data \n")
 # print(pretty_print_json(data))
 print("First Page")
+allVideoId('',None)
+
 if 'nextPageToken' in data:
     print('\nnextPageToken : ')
     print(data["nextPageToken"])
-    nextPageTokenVal = data["nextPageToken"]
-if 'prevPageToken' in data:
-    print('\nprevPageToken : ')
-    print(data["prevPageToken"])
+    allVideoId(data["nextPageToken"],data)
 
 # Looping through each page below
 # print("\n Looping through items ...")
@@ -64,9 +71,10 @@ if 'prevPageToken' in data:
 #         if  750 <= dur :
 #             print("Too Long")
 
-print("Checking Remaining Pages \n")
+print("\n Checking Remaining Pages \n")
 while 'nextPageToken' in data:
     data = youtube_list_videos(data["nextPageToken"])
     if 'nextPageToken' in data:
         print('data["nextPageToken"]')
         print(data["nextPageToken"])
+        allVideoId(data["nextPageToken"],data)
