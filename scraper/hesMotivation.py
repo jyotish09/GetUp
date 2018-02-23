@@ -1,40 +1,9 @@
 import pyrebase, json, requests, isodate
 import txt
-
-def pretty_print_json(json_object):
-    return json.dumps(json_object, sort_keys=True, indent=4, separators=(',', ': '))
-
-def youtube_list_videos(pageToken):
-    url = 'https://www.googleapis.com/youtube/v3/search'
-    params = dict(
-        order='date',
-        pageToken=pageToken,
-        part='snippet',
-        channelId='UC3gWv-0A3qEeFBJESlsJa0g',
-        maxResults=50,
-        key=txt.youtubeAPIKey
-    )
-    resp = requests.get(url=url, params=params)
-    return json.loads(resp.text)
-
-def videoDetails(id):
-    urlVid = 'https://www.googleapis.com/youtube/v3/videos'
-    paramsVid= dict(
-    id=id,
-    part='contentDetails',
-    key=txt.youtubeAPIKey
-    )
-    respVid = requests.get(url=urlVid, params=paramsVid)
-    return json.loads(respVid.text)
-
-def printDetails(id,snippet,ptm,dur):
-    print("\n videoId : "+id+"\n")
-    print(" "+snippet).encode('utf-8').strip()
-    print(" "+ptm)
-    print(dur)
+from utils import pretty_print_json, youtube_list_videos, videoDetails, printDetails
 
 def allVideoId(pageToken,data):
-    resp = data if data else youtube_list_videos('')
+    resp = data if data else youtube_list_videos('','UC3gWv-0A3qEeFBJESlsJa0g')
 
     print("\n Calling allVideoId fn() : "+pageToken+"\n")
 
@@ -43,7 +12,11 @@ def allVideoId(pageToken,data):
             dataVid = videoDetails(i["id"]["videoId"])
             dur = isodate.parse_duration(dataVid["items"][0]["contentDetails"]["duration"]).total_seconds()
 
-            printDetails(i["id"]["videoId"],i["snippet"]["title"],dataVid["items"][0]["contentDetails"]["duration"],dur)
+            printDetails(
+            i["id"]["videoId"],
+            i["snippet"]["title"],
+            dataVid["items"][0]["contentDetails"]["duration"],
+            dur)
 
             if  dur <= 599 :
                 print(" <= PT9M59S")
@@ -53,18 +26,18 @@ def allVideoId(pageToken,data):
                 print(" Too Long")
 
 
-data = youtube_list_videos('')
+data = youtube_list_videos('','UC3gWv-0A3qEeFBJESlsJa0g')
 print("First Page")
 allVideoId('',None)
 
 if 'nextPageToken' in data:
-    print('\nnextPageToken : ')
-    print(data["nextPageToken"])
+    # print('\nnextPageToken : ')
+    # print(data["nextPageToken"])
     allVideoId(data["nextPageToken"],data)
 
 print("\n Checking Remaining Pages \n")
 while 'nextPageToken' in data:
-    data = youtube_list_videos(data["nextPageToken"])
+    data = youtube_list_videos(data["nextPageToken"],'UC3gWv-0A3qEeFBJESlsJa0g')
     if 'nextPageToken' in data:
         print('data["nextPageToken"]')
         print(data["nextPageToken"])

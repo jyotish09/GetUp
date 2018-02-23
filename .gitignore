@@ -3,3 +3,4 @@
 getupyoufool.json
 */__pycache__
 *samples*
+*.pyc
