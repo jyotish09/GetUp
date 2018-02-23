@@ -1,5 +1,4 @@
 import pyrebase, json, requests, isodate
-import txt
 from utils import pretty_print_json, youtube_list_videos, videoDetails, printDetails
 
 def allVideoId(pageToken,data):
@@ -11,19 +10,23 @@ def allVideoId(pageToken,data):
         if 'videoId' in i["id"]:
             dataVid = videoDetails(i["id"]["videoId"])
             dur = isodate.parse_duration(dataVid["items"][0]["contentDetails"]["duration"]).total_seconds()
-
-            printDetails(
-            i["id"]["videoId"],
-            i["snippet"]["title"],
-            dataVid["items"][0]["contentDetails"]["duration"],
-            dur)
+            flag = False
 
             if  dur <= 599 :
-                print(" <= PT9M59S")
+                # print(" <= PT9M59S")
+                flag = True
             if  750 > dur > 599 :
-                print(" PT10M00S - PT12M30S")
-            if  750 <= dur :
-                print(" Too Long")
+                # print(" PT10M00S - PT12M30S")
+                flag = True
+            # if  750 <= dur :
+            #     print(" Too Long")
+
+            if flag :
+                printDetails(
+                i["id"]["videoId"],
+                i["snippet"]["title"],
+                dataVid["items"][0]["contentDetails"]["duration"],
+                dur)
 
 
 data = youtube_list_videos('','UC3gWv-0A3qEeFBJESlsJa0g')
