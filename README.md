@@ -11,7 +11,6 @@
 #### Feel Good Sources
 
 * [Zen Pencils Comic](https://zenpencils.com/)
-* [Quotes](https://www.brainyquote.com/topics/motivational)
 * [Absolute Motivation](https://www.youtube.com/channel/UCpmZQGTZXn9xd4nN59pbIWQ)
 * [HESMotivation](https://www.youtube.com/channel/UC3gWv-0A3qEeFBJESlsJa0g)
 * [Imgur](https://imgur.com/user/loserTrying/favorites/folder/1228477/feel-good) - My Collection
