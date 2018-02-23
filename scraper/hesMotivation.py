@@ -14,8 +14,6 @@ def youtube_list_videos(pageToken):
         maxResults=50,
         key=txt.youtubeAPIKey
     )
-    # print('params')
-    # print(params)
     resp = requests.get(url=url, params=params)
     return json.loads(resp.text)
 
@@ -29,36 +27,33 @@ def videoDetails(id):
     respVid = requests.get(url=urlVid, params=paramsVid)
     return json.loads(respVid.text)
 
+def printDetails(id,snippet,ptm,dur):
+    print("\n videoId : "+id+"\n")
+    print(" "+snippet).encode('utf-8').strip()
+    print(" "+ptm)
+    print(dur)
+
 def allVideoId(pageToken,data):
     resp = data if data else youtube_list_videos('')
 
     print("\n Calling allVideoId fn() : "+pageToken+"\n")
 
-    # print(pretty_print_json(resp))
     for i in resp["items"]:
         if 'videoId' in i["id"]:
-            print("\n")
-            print(i["snippet"]["title"]).encode('utf-8').strip() # - Needs for Storage
-            print(i["id"]["videoId"])
-
             dataVid = videoDetails(i["id"]["videoId"])
-            # print(pretty_print_json(dataVid))
-            print(dataVid["items"][0]["contentDetails"]["duration"])
             dur = isodate.parse_duration(dataVid["items"][0]["contentDetails"]["duration"]).total_seconds()
-            print(dur)
+
+            printDetails(i["id"]["videoId"],i["snippet"]["title"],dataVid["items"][0]["contentDetails"]["duration"],dur)
 
             if  dur <= 599 :
-                print("<= PT9M59S")
+                print(" <= PT9M59S")
             if  750 > dur > 599 :
-                print("PT10M00S - PT12M30S")
+                print(" PT10M00S - PT12M30S")
             if  750 <= dur :
-                print("Too Long")
+                print(" Too Long")
 
 
 data = youtube_list_videos('')
-# data = youtube_list_videos('CMgBEAA')
-# print("\n data \n")
-# print(pretty_print_json(data))
 print("First Page")
 allVideoId('',None)
 
@@ -66,7 +61,7 @@ if 'nextPageToken' in data:
     print('\nnextPageToken : ')
     print(data["nextPageToken"])
     allVideoId(data["nextPageToken"],data)
-    
+
 print("\n Checking Remaining Pages \n")
 while 'nextPageToken' in data:
     data = youtube_list_videos(data["nextPageToken"])
