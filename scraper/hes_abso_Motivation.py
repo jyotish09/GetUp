@@ -45,3 +45,8 @@ while 'nextPageToken' in data:
         print('data["nextPageToken"]')
         print(data["nextPageToken"])
         allVideoId(data["nextPageToken"],data)
+
+#    One Script To Rule Them Both
+#    UCpmZQGTZXn9xd4nN59pbIWQ - Absolute Motivation channelId
+#    UC3gWv-0A3qEeFBJESlsJa0g - HESMotivation channelId
+#
