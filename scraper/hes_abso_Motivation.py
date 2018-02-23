@@ -1,5 +1,5 @@
 import pyrebase, json, requests, isodate
-from utils import pretty_print_json, youtube_list_videos, videoDetails, printDetails
+from utils import pretty_print_json, youtube_list_videos, videoDetails, printDetails, pushHESVidDetails, pushABSVidDetails
 
 def allVideoId(pageToken,data):
     resp = data if data else youtube_list_videos('','UC3gWv-0A3qEeFBJESlsJa0g')
@@ -27,6 +27,18 @@ def allVideoId(pageToken,data):
                 i["snippet"]["title"],
                 dataVid["items"][0]["contentDetails"]["duration"],
                 dur)
+                # HESMotivation FDB
+                pushHESVidDetails(
+                i["id"]["videoId"],
+                i["snippet"]["title"],
+                dataVid["items"][0]["contentDetails"]["duration"],
+                dur)
+                # AbsoluteMotivation to FDB
+                # pushABSVidDetails(
+                # i["id"]["videoId"],
+                # i["snippet"]["title"],
+                # dataVid["items"][0]["contentDetails"]["duration"],
+                # dur)
 
 
 data = youtube_list_videos('','UC3gWv-0A3qEeFBJESlsJa0g')
@@ -46,7 +58,6 @@ while 'nextPageToken' in data:
         print(data["nextPageToken"])
         allVideoId(data["nextPageToken"],data)
 
-#    One Script To Rule Them Both
+#    One Script To Rule Them All - Basically get all videos from any channel with a given channelId
 #    UCpmZQGTZXn9xd4nN59pbIWQ - Absolute Motivation channelId
 #    UC3gWv-0A3qEeFBJESlsJa0g - HESMotivation channelId
-#

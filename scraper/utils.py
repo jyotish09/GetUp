@@ -32,3 +32,11 @@ def printDetails(id,snippet,ptm,dur):
     print(" "+snippet).encode('utf-8').strip()
     print(" "+ptm)
     print(dur)
+
+def pushHESVidDetails(id,snippet,ptm,dur):
+    print(" Pushing Data : " + id + " into FDB")
+    txt.db.child("hesMotivation").push({'id':id,'clipName':snippet,'ptm':ptm,'dur':dur}, txt.user['idToken'])
+
+def pushABSVidDetails(id,snippet,ptm,dur):
+    print(" Pushing Data : " + id + " into FDB")
+    txt.db.child("absoluteMotivation").push({'id':id,'clipName':snippet,'ptm':ptm,'dur':dur}, txt.user['idToken'])
