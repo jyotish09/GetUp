@@ -34,11 +34,11 @@ def allVideoId(pageToken,data):
                 # dataVid["items"][0]["contentDetails"]["duration"],
                 # dur)
                 # AbsoluteMotivation to FDB
-                pushABSVidDetails(
-                i["id"]["videoId"],
-                i["snippet"]["title"],
-                dataVid["items"][0]["contentDetails"]["duration"],
-                dur)
+                # pushABSVidDetails(
+                # i["id"]["videoId"],
+                # i["snippet"]["title"],
+                # dataVid["items"][0]["contentDetails"]["duration"],
+                # dur)
 
 
 data = youtube_list_videos('','UCpmZQGTZXn9xd4nN59pbIWQ')
