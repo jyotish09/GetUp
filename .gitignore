@@ -1,5 +1,19 @@
-*txt*
+# Build Files
 *.DS_Store
+.firebaserc
+build/
+database.rules.json
+dist/
+firebase.json
+node_modules/
+npm-debug.log
+yarn.lock
+.jshintrc
+.eslintrc
+.babelrc
+
+#Custom Files
+*txt*
 getupyoufool.json
 */__pycache__
 *samples*
