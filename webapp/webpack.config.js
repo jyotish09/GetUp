@@ -17,7 +17,8 @@ module.exports = {
         filename: 'index_bundle.js'
     },
     module: {
-        loaders: [{
+        loaders: [
+           {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
@@ -27,7 +28,6 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/
             },
-            // Used for Bootstrap Less Source Files
             {
                 test: /\.less$/,
                 use: [{
@@ -41,12 +41,18 @@ module.exports = {
                     }
                 ]
             },
-            // Used for Bootstrap Less Source Files
             {
-                test: /\.css$/,
-                loader: style-loader!css-loader?modules=true&localIdentName=[name]__[local]___[hash:base64:5]
+              test: /\.css$/,
+              loader: 'style-loader'
             },
-            // Used for Bootstrap Glyphicon Fonts
+            {
+              test: /\.css$/,
+              loader: 'css-loader',
+              query: {
+                modules: true,
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+              }
+            },
             {
                 test: /\.(woff2|woff|ttf|svg|eot)$/,
                 loader: 'file-loader'
