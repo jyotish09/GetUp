@@ -5,9 +5,10 @@ export default class App extends React.Component {
   render() {
     return (<div style={{
         textAlign: 'center',
-        fontFamily: 'helvetica'
+        fontFamily: 'helvetica',
+        paddingTop: '1%'
       }} className="container">
-      <h1>Get Up</h1>
+      <h1 style={{color: '#ff6b6b'}}>Get Up</h1>
       <TimeData/>
     </div>);
   }

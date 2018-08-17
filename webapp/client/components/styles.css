@@ -1,5 +1,32 @@
 .timeButtons {
   display: flex;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+.hr {
+  font-size: 90px;
+  font-family: monospace;
+  color: #00b4ff;
+}
+
+.min {
+  font-size: 90px;
+  font-family: monospace;
+  color: #ffa100;
+}
+
+.submit {
+  background-color: #3782e2;
+  border-color: #3782e2;
+}
+
+.chevronUp {
+  margin-right: 1%;
+  margin-bottom: 8px;
+}
+
+.chevronDown {
+  margin-left: 1%;
+  margin-bottom: 8px;
 }

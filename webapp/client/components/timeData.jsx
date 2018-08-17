@@ -16,29 +16,35 @@ export default class TimeData extends React.Component {
     console.log(moment().format('LT'));
     console.log('style');
     console.log(style);
-    console.log('style.timeButtons');
-    console.log(style.timeButtons);
     console.groupEnd();
 
   }
+
+  formatter(value) {
+    return `${value}%`;
+  }
+
   render() {
     return (<div className="">
       <div className={cx(style.timeButtons)}>
-        <ButtonToolbar>
-          <Button bsStyle="primary">
-            <Glyphicon glyph="glyphicon glyphicon-chevron-up"/>
-          </Button>
-          <Button bsStyle="primary">
-            <Glyphicon glyph="glyphicon glyphicon-chevron-down"/>
-          </Button>
-      </ButtonToolbar>
-    </div>
-  <br />
+        <div className={cx(style.hr)}>
+          <Button className={cx(style.chevronUp)} bsSize="small"><Glyphicon glyph="glyphicon glyphicon-chevron-up"/></Button>
+            12
+          <Button className={cx(style.chevronDown)} bsSize="small"><Glyphicon glyph="glyphicon glyphicon-chevron-down"/></Button>
+          <div></div>
+        </div>
+        <div className={cx(style.min)}>
+          <Button className={cx(style.chevronUp)} bsSize="small"><Glyphicon glyph="glyphicon glyphicon-chevron-up"/></Button>
+            00
+          <Button className={cx(style.chevronDown)} bsSize="small"><Glyphicon glyph="glyphicon glyphicon-chevron-down"/></Button>
+        </div>
+      </div>
+      <br/>
       <p>
-      <Button bsStyle="info" bsSize="large">
-        Notification @Time
-      </Button>
-    </p>
+        <Button bsStyle="info" bsSize="large" className={cx(style.submit)}>
+          Notification @Time
+        </Button>
+      </p>
     </div>);
   }
 }
