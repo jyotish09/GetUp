@@ -21,6 +21,12 @@
   border-color: #3782e2;
 }
 
+.submit:hover {
+  -webkit-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  transform: scale(0.9);
+}
+
 .chevronUp {
   margin-right: 1%;
   margin-bottom: 8px;
@@ -29,4 +35,10 @@
 .chevronDown {
   margin-left: 1%;
   margin-bottom: 8px;
+}
+
+.am {
+  font-size: 40px;
+    font-family: monospace;
+    color: #4682b4;
 }
