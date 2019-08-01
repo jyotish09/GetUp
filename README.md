@@ -2,7 +2,7 @@
 
 #### Tech Stacks Required
 
-* [ReactJS](https://facebook.github.io/react/) - Interactive UI boilerplate
+* [React Native](https://facebook.github.io/react-native/docs/tutorial) - Interactive UI boilerplate
 * [Firebase](https://firebase.google.com/) - Database (npm install -g firebase-cli then firebase init)
 * [React-Bootstrap](https://react-bootstrap.github.io/) - UI boilerplate
 * [yarn](https://yarnpkg.com/lang/en/) - Evented I/O for the backend
@@ -13,4 +13,4 @@
 * [Zen Pencils Comic](https://zenpencils.com/)
 * [Absolute Motivation](https://www.youtube.com/channel/UCpmZQGTZXn9xd4nN59pbIWQ)
 * [HESMotivation](https://www.youtube.com/channel/UC3gWv-0A3qEeFBJESlsJa0g)
-* [Imgur](https://imgur.com/user/loserTrying/favorites/folder/1228477/feel-good) - My Collection
+* [Imgur](https://imgur.com/user/loserTrying/favorites/folder/1228477/feel-good) - My Collection / Not yet linked it
