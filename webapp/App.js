@@ -1,73 +1,44 @@
 import React, { Component } from 'react';
-import {
-    Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View
-} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
-export default class Touchables extends Component {
-    onPressButton() {
-        alert('You tapped the button!');
-    }
-
-    onLongPressButton() {
-        alert('You long-pressed the button!');
-    }
-
-
+export default class FlexDirectionBasics extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <TouchableHighlight onPress={this.onPressButton} underlayColor="white">
-                    <View style={styles.button}>
-                        <Text style={styles.buttonText}>TouchableHighlight</Text>
-                    </View>
-                </TouchableHighlight>
-                <TouchableOpacity onPress={this.onPressButton}>
-                    <View style={styles.button}>
-                        <Text style={styles.buttonText}>TouchableOpacity</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableNativeFeedback
-                    onPress={this.onPressButton}
-                    background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
-                >
-                    <View style={styles.button}>
-                        <Text style={styles.buttonText}>
-TouchableNativeFeedback
-                            {Platform.OS !== 'android' ? '(Android only)' : ''}
-                        </Text>
-                    </View>
-                </TouchableNativeFeedback>
-                <TouchableWithoutFeedback
-                    onPress={this.onPressButton}
-                >
-                    <View style={styles.button}>
-                        <Text style={styles.buttonText}>TouchableWithoutFeedback</Text>
-                    </View>
-                </TouchableWithoutFeedback>
-                <TouchableHighlight onPress={this.onPressButton} onLongPress={this.onLongPressButton} underlayColor="white">
-                    <View style={styles.button}>
-                        <Text style={styles.buttonText}>Touchable with Long Press</Text>
-                    </View>
-                </TouchableHighlight>
+            <View style={styles.alignItems}>
+                <View style={styles.powderBlue} />
+                <View style={styles.skyBlue} />
+                <View style={styles.steelBlue} />
             </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        paddingTop: 60,
-        alignItems: 'center'
+let styles = StyleSheet.create({
+    flexColumnCSS: {
+        flex: 1, flexDirection: 'column', marginTop: '10%'
     },
-    button: {
-        marginBottom: 30,
-        width: 260,
-        alignItems: 'center',
-        backgroundColor: '#2196F3'
+    flexRowCSS: {
+        flex: 1, flexDirection: 'row', marginTop: '10%'
     },
-    buttonText: {
-        textAlign: 'center',
-        padding: 20,
-        color: 'white'
+    justifyContents: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-around', /* space-between, space-around, center, flex-end, flex-start */
+        marginTop: '10%'
+    },
+    alignItems: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center' /* stretch, center, flex-end, flex-start */
+    },
+    powderBlue: {
+        width: 75, height: 75, backgroundColor: 'powderblue'
+    },
+    skyBlue: {
+        width: 75, height: 75, backgroundColor: 'skyblue'
+    },
+    steelBlue: {
+        width: 75, height: 75, backgroundColor: 'steelblue'
     }
 });
