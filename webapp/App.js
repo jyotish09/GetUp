@@ -1,41 +1,73 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet, Text, View, ImageBackground,
+    Platform, StyleSheet, Text, TouchableHighlight, TouchableOpacity, TouchableNativeFeedback, TouchableWithoutFeedback, View
 } from 'react-native';
 
-export default class DisplayAnImage extends Component {
+export default class Touchables extends Component {
+    onPressButton() {
+        alert('You tapped the button!');
+    }
+
+    onLongPressButton() {
+        alert('You long-pressed the button!');
+    }
+
+
     render() {
         return (
             <View style={styles.container}>
-                <ImageBackground
-                    source={{ uri: 'https://w.wallhaven.cc/full/xl/wallhaven-xll76z.jpg' }}
-                    style={styles.image}
+                <TouchableHighlight onPress={this.onPressButton} underlayColor="white">
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>TouchableHighlight</Text>
+                    </View>
+                </TouchableHighlight>
+                <TouchableOpacity onPress={this.onPressButton}>
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>TouchableOpacity</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableNativeFeedback
+                    onPress={this.onPressButton}
+                    background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
                 >
-                    <Text style={styles.instructions}>
-                        Hello !
-                    </Text>
-                </ImageBackground>
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>
+TouchableNativeFeedback
+                            {Platform.OS !== 'android' ? '(Android only)' : ''}
+                        </Text>
+                    </View>
+                </TouchableNativeFeedback>
+                <TouchableWithoutFeedback
+                    onPress={this.onPressButton}
+                >
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>TouchableWithoutFeedback</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+                <TouchableHighlight onPress={this.onPressButton} onLongPress={this.onLongPressButton} underlayColor="white">
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>Touchable with Long Press</Text>
+                    </View>
+                </TouchableHighlight>
             </View>
         );
     }
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        backgroundColor: '#F5FCFF',
+        paddingTop: 60,
+        alignItems: 'center'
     },
-    image: {
-        height: 500,
-        justifyContent: 'space-around',
-        resizeMode: 'contain',
+    button: {
+        marginBottom: 30,
+        width: 260,
+        alignItems: 'center',
+        backgroundColor: '#2196F3'
     },
-    instructions: {
+    buttonText: {
         textAlign: 'center',
-        color: 'white',
-        backgroundColor: 'transparent',
-        fontSize: 25,
-    },
+        padding: 20,
+        color: 'white'
+    }
 });
