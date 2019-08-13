@@ -1,13 +1,36 @@
 import React, { Component } from 'react';
 import {
     View, StyleSheet, FlatList, Text,
-    SectionList
+    ActivityIndicator
 } from 'react-native';
 
 export default class ListItemsViewTest extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { isLoading: true };
+    }
+
+    async componentDidMount() {
+        try {
+            const response = await fetch('https://facebook.github.io/react-native/movies.json');
+            const responseJson = await response.json();
+            this.setState({
+                isLoading: false,
+                dataSource: responseJson.movies,
+            }, () => {
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     render() {
+        const { dataSource, isLoading } = this.state;
+        console.log('isLoading > ', isLoading);
+        const renderItem = isLoading ? <ActivityIndicator size="large" color="#00ff00" />
+            : <FlatListTuts dataSource={dataSource} />;
         return (
-            <SectionListBasics />
+            renderItem
         );
     }
 }
@@ -17,37 +40,16 @@ class FlatListTuts extends Component {
         return (
             <View style={styles.listCSS}>
                 <FlatList
-                    data={[
-                        { key: 'Devin' },
-                        { key: 'Dustin' },
-                        { key: 'Dominic' },
-                        { key: 'Jackson' },
-                        { key: 'James' },
-                        { key: 'Joel' },
-                        { key: 'John' },
-                        { key: 'Jillian' },
-                        { key: 'Jimmy' },
-                        { key: 'Julie' },
-                    ]}
-                    renderItem={({ item }) => <Text style={styles.item}>{item.key}</Text>}
-                />
-            </View>
-        );
-    }
-}
-
-class SectionListBasics extends Component {
-    render() {
-        return (
-            <View style={styles.listCSS}>
-                <SectionList
-                    sections={[
-                        { title: 'D', data: ['Devin', 'Dustin', 'Dominic'] },
-                        { title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie'] }
-                    ]}
-                    renderItem={({ item }) => <Text style={styles.item}>{item}</Text>}
-                    renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(item, index) => index}
+                    data={this.props.dataSource}
+                    renderItem={({ item }) => (
+                        <Text>
+                            {item.title}
+,
+                            {' '}
+                            {item.releaseYear}
+                        </Text>
+                    )}
+                    keyExtractor={({ id }, index) => id}
                 />
             </View>
         );
@@ -86,7 +88,7 @@ let styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-around',
-        // alignItems: 'center',
+        alignItems: 'center',
         marginTop: '10%',
         width: '100%'
     },
