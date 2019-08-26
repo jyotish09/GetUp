@@ -44,12 +44,13 @@ class FlatListTuts extends Component {
                     renderItem={({ item }) => (
                         <Text>
                             {item.title}
-,
+                            {' '}
+                            ,
                             {' '}
                             {item.releaseYear}
                         </Text>
                     )}
-                    keyExtractor={({ id }, index) => id}
+                    keyExtractor={({ id }) => id}
                 />
             </View>
         );
