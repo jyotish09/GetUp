@@ -7,6 +7,7 @@
 * [React-Bootstrap](https://react-bootstrap.github.io/) - UI boilerplate
 * [Layout Helper](https://yogalayout.com/playground) - Learning layout for React Native
 * [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) - Scrapping
+* [Layout Helper](https://yogalayout.com/playground) - Learning layout for React Native
 
 #### Feel Good Sources
 

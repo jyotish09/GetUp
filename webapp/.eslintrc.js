@@ -43,7 +43,8 @@ module.exports = {
     'no-undef': 'error',
     'react/prefer-stateless-function': 0,
     'func-names': 0,
-    'import/no-unresolved': 0
+    'import/no-unresolved': 0,
+    'max-classes-per-file': [1, 5]
   },
   parser: 'babel-eslint',
 };
