@@ -5,6 +5,7 @@
 * [React Native](https://facebook.github.io/react-native/docs/tutorial) - Interactive UI boilerplate
 * [Firebase](https://firebase.google.com/) - Database (npm install -g firebase-cli then firebase init)
 * [React-Bootstrap](https://react-bootstrap.github.io/) - UI boilerplate
+* [Layout Helper](https://yogalayout.com/playground) - Learning layout for React Native
 * [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) - Scrapping
 * [Layout Helper](https://yogalayout.com/playground) - Learning layout for React Native
 
