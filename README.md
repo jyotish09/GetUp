@@ -6,7 +6,6 @@
 * [Firebase](https://firebase.google.com/) - Database (npm install -g firebase-cli then firebase init)
 * [Layout Helper](https://yogalayout.com/playground) - Learning layout for React Native
 * [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) - Scrapping
-* [Layout Helper](https://yogalayout.com/playground) - Learning layout for React Native
 
 #### Feel Good Sources
 
