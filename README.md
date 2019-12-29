@@ -15,3 +15,6 @@
 
 #### Later Stage
 * [Imgur](https://imgur.com/user/loserTrying/favorites/folder/1228477/feel-good) - My Collection / Not yet linked it
+
+##### PS:
+ * For current work that's going on switch to branch `dev/timeBranch` for more details.
