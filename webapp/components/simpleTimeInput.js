@@ -3,8 +3,10 @@ import { Button, View,
     StyleSheet, Text,
     TextInput } from "react-native";
 import NumericInput from 'react-native-numeric-input';
-
+import getTokenForPushNotificationsAsync from '../utils';
 import {message_pack} from '../assets/messages';
+
+import firebaseApp from '../firebase';
 
 class EmptyRow extends Component {
     render() {
@@ -26,10 +28,20 @@ export default class SimpleTimeInput extends Component {
       minute: 0,
       handle: ''
     };
+    this.itemsRef = firebaseApp.database();
   }
 
   submitDetails = () => {
-    console.log("Save Time as per the user's wish >>> ", this.state);
+    const item = JSON.stringify({
+      userDetails: this.state,
+      expoToken: getTokenForPushNotificationsAsync()});
+    this.itemsRef.ref(`/userDetails/`)
+      .push(item, error => {
+        if (!error)
+            console.log("Item added to firebase");
+        else
+            console.warn("There was an error writing to the database, error");
+    });
   };
 
   render() {
