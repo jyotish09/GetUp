@@ -26,7 +26,7 @@ export default class SimpleTimeInput extends Component {
     this.state = {
       hour: 0,
       minute: 0,
-      handle: ''
+      // handle: ''
     };
     this.itemsRef = firebaseApp.database();
   }
@@ -35,7 +35,7 @@ export default class SimpleTimeInput extends Component {
     const item = JSON.stringify({
       userDetails: this.state,
       expoToken: getTokenForPushNotificationsAsync()});
-    this.itemsRef.ref(`/userDetails/`)
+    this.itemsRef.ref(`/userDetails/pending`)
       .push(item, error => {
         if (!error)
             console.log("Item added to firebase");
@@ -47,7 +47,7 @@ export default class SimpleTimeInput extends Component {
   render() {
     return (
       <View style={styles.containerView}>
-          <TextInput
+          {/* <TextInput
             style={styles.input}
             onChangeText={text => this.setState({handle: text})}
             value={this.state.handle}
@@ -55,7 +55,7 @@ export default class SimpleTimeInput extends Component {
             placeholder = {message_pack.handlePlaceholder}
             placeholderTextColor = "grey"
             autoCapitalize = "none"
-            />
+            /> */}
         <Text style={styles.colonFont}>{message_pack.alertTime}</Text>
         <EmptyRow />
         <View style={styles.justifyContents}>
