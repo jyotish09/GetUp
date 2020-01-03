@@ -8,6 +8,8 @@ import {message_pack} from '../assets/messages';
 
 import firebaseApp from '../firebase';
 
+const expoTokenID = getTokenForPushNotificationsAsync();
+
 class EmptyRow extends Component {
     render() {
         return (
@@ -34,13 +36,20 @@ export default class SimpleTimeInput extends Component {
   submitDetails = () => {
     const item = JSON.stringify({
       userDetails: this.state,
-      expoToken: getTokenForPushNotificationsAsync()});
-    this.itemsRef.ref(`/userDetails/pending`)
+      expoToken: expoTokenID});
+    let nodeID = (() => {
+      for(i in expoTokenID){ 
+        if(typeof expoTokenID[i] === 'string' && expoTokenID[i].includes('ExponentPushToken')) {
+          /* expoTokenID[i] : Should look like ExponentPushToken[XXXXXXXXXXXXXXXXXXX] */
+          return (expoTokenID[i].substring(18, expoTokenID[i].length-1));
+        }
+      }})();
+    this.itemsRef.ref(`/userDetails/expoDeviceIDs/` + nodeID)
       .push(item, error => {
         if (!error)
             console.log("Item added to firebase");
         else
-            console.warn("There was an error writing to the database, error");
+            console.warn("There was an error writing to the database, error : ", error);
     });
   };
 
