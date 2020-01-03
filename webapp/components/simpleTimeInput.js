@@ -28,15 +28,14 @@ export default class SimpleTimeInput extends Component {
     this.state = {
       hour: 0,
       minute: 0,
-      // handle: ''
     };
     this.itemsRef = firebaseApp.database();
   }
 
   submitDetails = () => {
-    const item = JSON.stringify({
+    const item = {
       userDetails: this.state,
-      expoToken: expoTokenID});
+      expoToken: expoTokenID};
     let nodeID = (() => {
       for(i in expoTokenID){ 
         if(typeof expoTokenID[i] === 'string' && expoTokenID[i].includes('ExponentPushToken')) {
@@ -45,26 +44,17 @@ export default class SimpleTimeInput extends Component {
         }
       }})();
     this.itemsRef.ref(`/userDetails/expoDeviceIDs/` + nodeID)
-      .push(item, error => {
+      .update(item.userDetails, error => {
         if (!error)
-            console.log("Item added to firebase");
+            console.log("Item created / updated in firebase");
         else
-            console.warn("There was an error writing to the database, error : ", error);
+            console.warn("There was an error creating / updating in the database, error : ", error);
     });
   };
 
   render() {
     return (
       <View style={styles.containerView}>
-          {/* <TextInput
-            style={styles.input}
-            onChangeText={text => this.setState({handle: text})}
-            value={this.state.handle}
-            underlineColorAndroid = "transparent"
-            placeholder = {message_pack.handlePlaceholder}
-            placeholderTextColor = "grey"
-            autoCapitalize = "none"
-            /> */}
         <Text style={styles.colonFont}>{message_pack.alertTime}</Text>
         <EmptyRow />
         <View style={styles.justifyContents}>
