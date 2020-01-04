@@ -19,3 +19,5 @@ getupyoufool.json
 *samples*
 *.pyc
 webapp/package-lock.json
+webapp/sample.txt
+webapp/firebase.js
