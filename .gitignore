@@ -21,3 +21,4 @@ getupyoufool.json
 webapp/package-lock.json
 webapp/sample.txt
 webapp/firebase.js
+serviceAccountKey.json

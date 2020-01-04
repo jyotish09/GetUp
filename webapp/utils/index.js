@@ -57,6 +57,6 @@ export const nodeId = (expoTokenID) => {
   for(i in expoTokenID){ 
     if(typeof expoTokenID[i] === 'string' && expoTokenID[i].includes('ExponentPushToken')) {
       /* expoTokenID[i] : Should look like ExponentPushToken[XXXXXXXXXXXXXXXXXXXXXX] */
-      return (expoTokenID[i].substring(18, expoTokenID[i].length-1));
+      return (expoTokenID[i].substring(18, 40));
     }
   }}
