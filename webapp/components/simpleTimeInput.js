@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { Button, View,
     StyleSheet, Text,
     TextInput } from "react-native";
-import NumericInput from 'react-native-numeric-input';
-import getTokenForPushNotificationsAsync from '../utils';
+import NumericInput from "react-native-numeric-input";
+import firebaseApp from '../firebase';
+import {getTokenForPushNotificationsAsync, alertTimeFn,
+  nodeId} from '../utils';
+const expoTokenID = getTokenForPushNotificationsAsync();
 import {message_pack} from '../assets/messages';
 
-import firebaseApp from '../firebase';
-
-const expoTokenID = getTokenForPushNotificationsAsync();
-
+/* Just to get an empty row between elements */
 class EmptyRow extends Component {
     render() {
         return (
@@ -32,19 +32,15 @@ export default class SimpleTimeInput extends Component {
     this.itemsRef = firebaseApp.database();
   }
 
+  /* On click of notify me at a particular time button */
   submitDetails = () => {
-    const item = {
-      userDetails: this.state,
-      expoToken: expoTokenID};
-    let nodeID = (() => {
-      for(i in expoTokenID){ 
-        if(typeof expoTokenID[i] === 'string' && expoTokenID[i].includes('ExponentPushToken')) {
-          /* expoTokenID[i] : Should look like ExponentPushToken[XXXXXXXXXXXXXXXXXXX] */
-          return (expoTokenID[i].substring(18, expoTokenID[i].length-1));
-        }
-      }})();
-    this.itemsRef.ref(`/userDetails/expoDeviceIDs/` + nodeID)
-      .update(item.userDetails, error => {
+    /* Data to be pushed at a node under userDetails */
+    const payload = {'updatedTimeStamp' : alertTimeFn(this.state),
+      expoTokenID: JSON.stringify(expoTokenID)};
+
+    /* Update with the payload into Firebase */
+    this.itemsRef.ref(`/userDetails/expoDeviceIDs/` + nodeId(expoTokenID))
+      .update(payload, error => {
         if (!error)
             console.log("Item created / updated in firebase");
         else
