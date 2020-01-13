@@ -59,4 +59,5 @@ export const nodeId = (expoTokenID) => {
       /* expoTokenID[i] : Should look like ExponentPushToken[XXXXXXXXXXXXXXXXXXXXXX] */
       return (expoTokenID[i].substring(18, 40));
     }
-  }}
+  }
+}
