@@ -10,7 +10,7 @@ import {
     getTokenForPushNotificationsAsync, alertTimeFn,
     nodeId
 } from '../utils';
-import { message_pack } from '../assets/messages';
+import messagePack from '../assets/messages';
 
 const expoTokenID = getTokenForPushNotificationsAsync();
 
@@ -57,7 +57,7 @@ export default class SimpleTimeInput extends Component {
   render() {
       return (
           <View style={styles.containerView}>
-              <Text style={styles.colonFont}>{message_pack.alertTime}</Text>
+              <Text style={styles.colonFont}>{messagePack.alertTime}</Text>
               <EmptyRow />
               <View style={styles.justifyContents}>
                   <NumericInput
@@ -91,7 +91,7 @@ export default class SimpleTimeInput extends Component {
                   />
               </View>
               <EmptyRow />
-              <Button title={message_pack.submitButtonMessage} onPress={this.submitDetails} />
+              <Button title={messagePack.submitButtonMessage} onPress={this.submitDetails} />
           </View>
       );
   }
@@ -122,8 +122,6 @@ let styles = StyleSheet.create({
         borderColor: '#7a42f4',
         borderWidth: 1,
         width: 140,
-        borderColor: 'gray',
-        borderWidth: 1,
         padding: 5,
         borderRadius: 8
     },
