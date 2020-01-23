@@ -43,8 +43,8 @@ export const getTokenForPushNotificationsAsync = async () => {
  * @param {Object} obj
  */
 export const alertTimeFn = (obj) => {
-    const time = `${parseInt(obj.hour) > 9 ? `${obj.hour}` : `0${obj.hour}`
-    }:${parseInt(obj.minute) > 9 ? `${obj.minute}` : `0${obj.minute}`
+    const time = `${parseInt(obj.hour, 10) > 9 ? `${obj.hour}` : `0${obj.hour}`
+    }:${parseInt(obj.minute, 10) > 9 ? `${obj.minute}` : `0${obj.minute}`
     }:00`;
     return (`${moment().format().split('T')[0]}T${time}`);
 };
@@ -54,7 +54,7 @@ export const alertTimeFn = (obj) => {
  * @param {Object} expoTokenID
  */
 export const nodeId = (expoTokenID) => {
-    for (i in expoTokenID) {
+    for (const i in expoTokenID) {
         if (typeof expoTokenID[i] === 'string' && expoTokenID[i].includes('ExponentPushToken')) {
             /* expoTokenID[i] : Should look like ExponentPushToken[XXXXXXXXXXXXXXXXXXXXXX] */
             return (expoTokenID[i].substring(18, 40));

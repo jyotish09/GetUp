@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {
     Button, View,
-    StyleSheet, Text,
-    TextInput
+    StyleSheet, Text
 } from 'react-native';
 import NumericInput from 'react-native-numeric-input';
 import firebaseApp from '../firebase';
