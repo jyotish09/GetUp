@@ -37,3 +37,17 @@ exports.getTodaysArticle = functions.https.onRequest((req, res) => {
         res.send(todaysArticle);
     });
 });
+
+
+/*
+ * For sending push notification of getTodaysArticle() link to all the expo tokens
+ * [Link for that](https://us-central1-getupyoufool160218.cloudfunctions.net/sendPushNotifcation)
+*/
+exports.sendPushNotifcation = functions.https.onRequest((req, res) => {
+    const randomNode = utils.randomCollectionNode();
+    const ref = db.ref('userDetails/expoDeviceIDs');
+    ref.once("value", (snapshot) => {
+        console.log(snapshot.val());
+        res.send(snapshot.val());
+    });
+});
