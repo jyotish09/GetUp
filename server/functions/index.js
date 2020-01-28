@@ -2,8 +2,9 @@ const functions = require('firebase-functions');
 const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 const utils = require("./utils");
-const Expo = require("expo-server-sdk");
-const expo = Expo.Expo;
+const { Expo } = require("expo-server-sdk");
+const { chunkPushNotifications, sendPushNotificationsAsync } = Expo.prototype;
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://getupyoufool160218.firebaseio.com"
@@ -51,21 +52,54 @@ exports.sendPushNotifcation = functions.https.onRequest((req, res) => {
     db.ref('todaysArticle').once("value", (snapshot) => {
         todaysArticle = {link: snapshot.val().link, linkName: snapshot.val().linkName};
     });
-    let expoTokens = [], messages = [];
+    let messages = [];
     expoDeviceIDList.once("value", (snapshot) => {
-        let list = snapshot.val(); /* list[i].expoTokenID */
+        let list = snapshot.val();
         
         for(i in list) {
-            if (expo.isExpoPushToken(`ExponentPushToken[${i}]`)) {
-                expoTokens.push(`ExponentPushToken[${i}]`);
+            if (Expo.isExpoPushToken(`ExponentPushToken[${i}]`)) {
+                /* Construct message for each device / nodes */
+                messages.push({
+                    to: `ExponentPushToken[${i}]`,
+                    sound: 'default',
+                    body: 'Sample Notification',
+                    todaysArticle: todaysArticle,
+                });
             } else {
-                console.error('Wrong Token >> ', `ExponentPushToken[${i}]`);
+                console.error('Wrong Token details >> ', list[i]);
             }
         }
+
+        /* Send all the messages now */
+        let chunks = chunkPushNotifications(messages);
+        let tickets = [];
+        // (async () => {
+        //     for (let chunk of chunks) {
+        //       try {
+        //         // let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+        //         // tickets.push(...ticketChunk);
+        //         tickets.push(sendPushNotificationsAsync(chunk));
+        //       } catch (error) {
+        //         console.error(error);
+        //       }
+        //     }
+        //     tickets = await Promise.all(tickets);
+        //     console.log('tickets > ', tickets);
+        //   })();
+        (() => {
+            for (let chunk of chunks) {
+              try {
+                console.log('chunk >> ', chunk);
+                let ticketChunk = sendPushNotificationsAsync(chunk);
+                tickets.push(...ticketChunk);
+              } catch (error) {
+                console.error(error);
+              }
+            }
+          })();
+        console.log('tickets > ', tickets);
         res.send({
-            data: snapshot.val(),
-            expoTokens: expoTokens,
-            todaysArticle: todaysArticle
+            messages: messages
         });
     });
 });
