@@ -2,6 +2,8 @@ const functions = require('firebase-functions');
 const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 const utils = require("./utils");
+const Expo = require("expo-server-sdk");
+const expo = Expo.Expo;
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://getupyoufool160218.firebaseio.com"
@@ -44,10 +46,26 @@ exports.getTodaysArticle = functions.https.onRequest((req, res) => {
  * [Link for that](https://us-central1-getupyoufool160218.cloudfunctions.net/sendPushNotifcation)
 */
 exports.sendPushNotifcation = functions.https.onRequest((req, res) => {
-    const randomNode = utils.randomCollectionNode();
-    const ref = db.ref('userDetails/expoDeviceIDs');
-    ref.once("value", (snapshot) => {
-        console.log(snapshot.val());
-        res.send(snapshot.val());
+    const expoDeviceIDList = db.ref('userDetails/expoDeviceIDs');
+    let todaysArticle = {};
+    db.ref('todaysArticle').once("value", (snapshot) => {
+        todaysArticle = {link: snapshot.val().link, linkName: snapshot.val().linkName};
+    });
+    let expoTokens = [], messages = [];
+    expoDeviceIDList.once("value", (snapshot) => {
+        let list = snapshot.val(); /* list[i].expoTokenID */
+        
+        for(i in list) {
+            if (expo.isExpoPushToken(`ExponentPushToken[${i}]`)) {
+                expoTokens.push(`ExponentPushToken[${i}]`);
+            } else {
+                console.error('Wrong Token >> ', `ExponentPushToken[${i}]`);
+            }
+        }
+        res.send({
+            data: snapshot.val(),
+            expoTokens: expoTokens,
+            todaysArticle: todaysArticle
+        });
     });
 });
